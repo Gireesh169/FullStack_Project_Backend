@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface CityInfoService {
 
-    CityInfo addCityInfo(CityInfo cityInfo);
+    CityInfo addCityInfo(CityInfo cityinfo);
 
     List<CityInfo> getAllCityInfo();
 
@@ -13,3 +13,5 @@ public interface CityInfoService {
 
     void deleteCityInfo(Long id);
 }
+
+
