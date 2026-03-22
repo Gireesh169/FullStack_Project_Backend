@@ -1,13 +1,15 @@
 package com.klu.serviceImple;
 
-import com.klu.model.CityPost;
-import com.klu.repository.CityPostRepo;
-import com.klu.service.CityPostService;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import com.klu.model.CityPost;
+import com.klu.model.User;
+import com.klu.repository.CityPostRepo;
+import com.klu.repository.UserRepo;
+import com.klu.service.CityPostService;
 
 @Service
 public class CityPostServiceImple implements CityPostService {
@@ -15,9 +17,21 @@ public class CityPostServiceImple implements CityPostService {
     @Autowired
     private CityPostRepo cityPostRepo;
 
+    @Autowired
+    private UserRepo userRepo; // Add this
+
     @Override
-    public CityPost createPost(CityPost post) {
+ // Change method signature:
+    public CityPost createPost(CityPost post, Integer userId) {
+        User user = userRepo.findById(userId).orElseThrow(()->new RuntimeException("No Id found to post"));
+        post.setUser(user);  // link user to post
         return cityPostRepo.save(post);
+    }
+
+   
+    @Override
+    public List<CityPost> getPostsByUser(Long userId) {
+        return cityPostRepo.findByUserId(userId);
     }
 
     @Override
@@ -45,11 +59,7 @@ public class CityPostServiceImple implements CityPostService {
         return cityPostRepo.findByCategory(category);
     }
 
-    @Override
-    public List<CityPost> getPostsByUser(String postedBy) {
-        return cityPostRepo.findByPostedBy(postedBy);
-    }
-
+   
     @Override
     public CityPost likePost(Long id) {
         CityPost post = cityPostRepo.findById(id).orElse(null);

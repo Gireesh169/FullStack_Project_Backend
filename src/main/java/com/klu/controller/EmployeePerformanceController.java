@@ -27,7 +27,7 @@ public class EmployeePerformanceController {
     public EmployeePerformance addPerformance(@RequestBody EmployeePerformance performance) {
         return employeePerformanceService.addPerformance(performance);
     }
-    @GetMapping("/getById")
+    @GetMapping("/getById/{employeeId}")
     public EmployeePerformance getPerformanceByEmployees(@PathVariable int employeeId) {
     	return employeePerformanceService.getPerformanceByEmployee(employeeId);
     }

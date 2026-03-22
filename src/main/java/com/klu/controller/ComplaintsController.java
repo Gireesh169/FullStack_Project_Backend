@@ -31,7 +31,7 @@ public class ComplaintsController {
     	return complaintsService.getAllComplaints();
     }
     
-    @GetMapping("/getById")
+    @GetMapping("/getById/{id}")
     public Complaints getComplaintById(@PathVariable long id) {
     	return complaintsService.getComplaintById(id);
     }
@@ -40,7 +40,7 @@ public class ComplaintsController {
     	return complaintsService.getComplaintsByPlace(place);
     }
     
-    @DeleteMapping("/delete")
+    @DeleteMapping("/delete/{id}")
     public void deleteComplaint(@PathVariable Long id) {
     	complaintsService.deleteComplaint(id);
     }
