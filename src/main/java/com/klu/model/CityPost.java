@@ -9,7 +9,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
+import lombok.Data;
 
+@Data
 @Entity
 @Table(name = "city_posts")
 public class CityPost {
@@ -33,6 +35,7 @@ public class CityPost {
    private int likesCount;
 
    private String postedBy;
+   
 
    private LocalDateTime postedAt;
 
@@ -41,4 +44,5 @@ public class CityPost {
        this.postedAt = LocalDateTime.now();
        this.likesCount = 0;
    }
+
 }
