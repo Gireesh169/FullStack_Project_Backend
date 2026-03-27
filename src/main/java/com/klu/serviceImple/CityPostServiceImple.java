@@ -21,7 +21,6 @@ public class CityPostServiceImple implements CityPostService {
     private UserRepo userRepo; // Add this
 
     @Override
- // Change method signature:
     public CityPost createPost(CityPost post, Integer userId) {
         User user = userRepo.findById(userId).orElseThrow(()->new RuntimeException("No Id found to post"));
         post.setUser(user);  // link user to post
@@ -61,17 +60,33 @@ public class CityPostServiceImple implements CityPostService {
 
    
     @Override
-    public CityPost likePost(Long id) {
-        CityPost post = cityPostRepo.findById(id).orElse(null);
-        if (post != null) {
-            post.setLikesCount(post.getLikesCount() + 1);
-            return cityPostRepo.save(post);
+    public CityPost likePost(Long postId, Long userId) {
+
+        CityPost post = cityPostRepo.findById(postId).orElse(null);
+        User user = userRepo.findById(userId).orElse(null);
+
+        if (post == null || user == null) return null;
+
+      //Toggle Like
+        if (post.getLikedUsers().contains(user)) {
+            post.getLikedUsers().remove(user); // UNLIKE
+        } else {
+            post.getLikedUsers().add(user); // LIKE
         }
-        return null;
+
+        post.setLikesCount(post.getLikedUsers().size());
+
+        return cityPostRepo.save(post);
     }
 
     @Override
     public void deletePost(Long id) {
         cityPostRepo.deleteById(id);
     }
+
+
+	
+
+
+	
 }

@@ -34,7 +34,7 @@ public class TaskAssignment {
 
     @ManyToOne
     @JoinColumn(name = "employee_id")
-    private User employee;
+    private Employee employee;
 
     @ManyToOne
     @JoinColumn(name = "assigned_by")
@@ -43,4 +43,5 @@ public class TaskAssignment {
     private LocalDateTime assignedAt;
 
     private String status;
+    
 }

@@ -8,6 +8,7 @@ import lombok.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+
 public class CityInfo {
 
     @Id
@@ -17,4 +18,6 @@ public class CityInfo {
     private String area;
 
     private String placeImp;
+
+
 }

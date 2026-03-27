@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface TaskAssignmentService {
 
-    TaskAssignment assignTask(TaskAssignment task);
+    TaskAssignment assignTask(Long complaintId, int employeeId, Long adminId);
 
     List<TaskAssignment> getAllAssignments();
 

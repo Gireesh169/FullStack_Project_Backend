@@ -10,14 +10,26 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/taskAssign")
+@CrossOrigin(origins = "http://localhost:5173")
+
 public class TaskAssignmentController {
 
-    @Autowired
+	@Autowired
     private TaskAssignmentService taskService;
-
     @PostMapping("/post")
-    public TaskAssignment assignTask(@RequestBody TaskAssignment task) {
-        return taskService.assignTask(task);
+    public TaskAssignment assignTask(
+            @RequestParam Long complaintId,
+            @RequestParam int employeeId,
+            @RequestParam Long adminId) {
+
+        return taskService.assignTask(complaintId, employeeId, adminId);
+    }
+    @PutMapping("/update/{id}")
+    public TaskAssignment updateStatus(
+            @PathVariable Long id,
+            @RequestParam String status) {
+
+        return taskService.updateTaskStatus(id, status);
     }
     @GetMapping("/all")
     public List<TaskAssignment> getAllAssignments() {
@@ -28,10 +40,7 @@ public class TaskAssignmentController {
         return taskService.getAssignmentsByEmployee(id);
     }
 
-    @PutMapping("/update/{id}")
-    public TaskAssignment updateStatus(@PathVariable Long id, @RequestParam String status) {
-        return taskService.updateTaskStatus(id, status);
-    }
+    
 
     @DeleteMapping("/delete/{id}")
     public String deleteAssignment(@PathVariable Long id) {

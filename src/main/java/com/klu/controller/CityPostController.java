@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/posts")
-@CrossOrigin
+@RequestMapping("/posts")
+@CrossOrigin(origins = "http://localhost:5173")
 public class CityPostController {
 
     @Autowired
@@ -51,9 +51,10 @@ public class CityPostController {
         return cityPostService.getPostsByUser(userId);
     }
     @PutMapping("/{id}/like")
-    public CityPost likePost(@PathVariable Long id) {
-        return cityPostService.likePost(id);
+    public CityPost likePost(@PathVariable Long id, @RequestParam Long userId) {
+        return cityPostService.likePost(id, userId);
     }
+    
     @DeleteMapping("/{id}")
     public String deletePost(@PathVariable Long id) {
         cityPostService.deletePost(id);

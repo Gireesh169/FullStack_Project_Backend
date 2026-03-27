@@ -18,11 +18,14 @@ public interface CityPostService {
 
     List<CityPost> getPostsByCategory(String category);
 
-    CityPost likePost(Long id);
+
 
     void deletePost(Long id);
 
 	CityPost createPost(CityPost post, Integer userId);
+
+	CityPost likePost(Long postId, Long userId);
+	
 
 	
 }

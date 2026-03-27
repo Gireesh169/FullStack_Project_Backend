@@ -21,4 +21,5 @@ public class Complaints {
     private String place;
 
     private String imageUrl;
+    private String status;
 }
