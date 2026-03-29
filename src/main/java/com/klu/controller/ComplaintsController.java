@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.klu.model.Complaints;
 import com.klu.service.ComplaintsService;
@@ -25,8 +27,38 @@ public class ComplaintsController {
     private ComplaintsService complaintsService;
 
     @PostMapping("/posting")
-    public Complaints createComplaint(@RequestBody Complaints complaint) {
-        return complaintsService.createComplaint(complaint);
+    public Complaints createComplaint(
+            @RequestParam("title") String title,
+            @RequestParam("description") String description,
+            @RequestParam("place") String place,
+            @RequestParam("status") String status,
+            @RequestParam("image") MultipartFile file
+    ) {
+        try {
+            // 🔹 Save file to local folder
+            String uploadDir = "uploads/";
+            String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
+            java.nio.file.Path filePath = java.nio.file.Paths.get(uploadDir + fileName);
+
+            java.nio.file.Files.createDirectories(filePath.getParent());
+            java.nio.file.Files.write(filePath, file.getBytes());
+
+            // 🔹 Create complaint object
+            Complaints c = new Complaints();
+            c.setTitle(title);
+            c.setDescription(description);
+            c.setPlace(place);
+            c.setStatus(status);
+
+            // Save file path as imageUrl
+            c.setImageUrl("http://localhost:8080/uploads/" + fileName);
+
+            return complaintsService.createComplaint(c);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("File upload failed");
+        }
     }
     
     @GetMapping("/getComplaints")

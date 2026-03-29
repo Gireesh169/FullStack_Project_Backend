@@ -1,12 +1,21 @@
 package com.klu.controller;
 
-import com.klu.model.CityPost;
-import com.klu.service.CityPostService;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
+import com.klu.model.CityPost;
+import com.klu.service.CityPostService;
 
 @RestController
 @RequestMapping("/posts")
@@ -17,8 +26,37 @@ public class CityPostController {
     private CityPostService cityPostService;
 
     @PostMapping("/create/{userId}")
-    public CityPost createPost(@RequestBody CityPost post, @PathVariable Integer userId) {
-        return cityPostService.createPost(post, userId);
+    public CityPost createPost(
+            @RequestParam("title") String title,
+            @RequestParam("description") String description,
+            @RequestParam("location") String location,
+            @RequestParam("category") String category,
+            @RequestParam("image") MultipartFile file,
+            @PathVariable Integer userId
+    ) {
+        try {
+            // Save file
+            String uploadDir = "uploads/";
+            String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
+
+            java.nio.file.Path filePath = java.nio.file.Paths.get(uploadDir + fileName);
+            java.nio.file.Files.createDirectories(filePath.getParent());
+            java.nio.file.Files.write(filePath, file.getBytes());
+
+            // Create object
+            CityPost post = new CityPost();
+            post.setTitle(title);
+            post.setDescription(description);
+            post.setLocation(location);
+            post.setCategory(category);
+            post.setImageUrl("http://localhost:8080/uploads/" + fileName);
+
+            return cityPostService.createPost(post, userId);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("City Post upload failed");
+        }
     }
     @GetMapping("/all")
     public List<CityPost> getAllPosts() {

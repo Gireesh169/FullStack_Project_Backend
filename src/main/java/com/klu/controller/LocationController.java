@@ -21,13 +21,10 @@ public class LocationController {
     @Autowired
     private LocationRepository locationRepository;
 
-    // ✅ GET all locations
     @GetMapping
     public List<Location> getAllLocations() {
         return locationRepository.findAll();
     }
-
-    // ✅ POST new location
     @PostMapping
     public Location addLocation(@RequestBody Location location) {
         return locationRepository.save(location);

@@ -8,11 +8,5 @@ import com.klu.model.CityInfo;
 @Repository
 public interface CityInfoRepo extends JpaRepository<CityInfo,Long>{
   
-	
-	
-	
-	
-	
-	
-	
+
 }
