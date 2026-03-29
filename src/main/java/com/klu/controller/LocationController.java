@@ -1,0 +1,35 @@
+package com.klu.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.klu.model.Location;
+import com.klu.repository.LocationRepository;
+
+@RestController
+@RequestMapping("/api/locations")
+@CrossOrigin(origins = "http://localhost:5173")
+public class LocationController {
+
+    @Autowired
+    private LocationRepository locationRepository;
+
+    // ✅ GET all locations
+    @GetMapping
+    public List<Location> getAllLocations() {
+        return locationRepository.findAll();
+    }
+
+    // ✅ POST new location
+    @PostMapping
+    public Location addLocation(@RequestBody Location location) {
+        return locationRepository.save(location);
+    }
+}
