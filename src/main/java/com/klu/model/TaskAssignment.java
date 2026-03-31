@@ -43,5 +43,7 @@ public class TaskAssignment {
     private LocalDateTime assignedAt;
 
     private String status;
+   // PENDING, IN_PROGRESS, RESOLVED
+    private boolean adminApproved; // true only after admin approval
     
 }

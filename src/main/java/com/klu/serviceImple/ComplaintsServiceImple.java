@@ -38,4 +38,17 @@ public class ComplaintsServiceImple implements ComplaintsService {
     public void deleteComplaint(Long id) {
     	complaintsservice.deleteById(id);
     }
+
+	@Override
+	public Complaints approveComplaint(Long complaintId) {
+	    Complaints complaint = complaintsservice.findById(complaintId).orElseThrow();
+
+	    if (!complaint.getStatus().equals("RESOLVED")) {
+	        throw new RuntimeException("Cannot approve before resolved");
+	    }
+
+	    complaint.setAdminApproved(true);
+
+	    return complaintsservice.save(complaint);
+	}
 }

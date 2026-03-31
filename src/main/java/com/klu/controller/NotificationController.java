@@ -23,19 +23,16 @@ public class NotificationController {
     @Autowired
     private NotificationRepository repo;
 
-    // 🔔 Get notifications by role
     @GetMapping("/{role}")
     public List<Notification> getByRole(@PathVariable String role) {
         return repo.findByRoleOrderByCreatedAtDesc(role);
     }
 
-    // ➕ Create notification
     @PostMapping
     public Notification create(@RequestBody Notification n) {
         return repo.save(n);
     }
 
-    // ✅ Mark as read
     @PutMapping("/{id}/read")
     public Notification markRead(@PathVariable Long id) {
         Notification n = repo.findById(id).orElseThrow();

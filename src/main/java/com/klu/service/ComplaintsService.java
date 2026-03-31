@@ -12,4 +12,7 @@ public interface ComplaintsService {
     Complaints getComplaintById(Long id);
     List<Complaints> getComplaintsByPlace(String place);  // ← fix this
     void deleteComplaint(Long id);
+	Complaints approveComplaint(Long id);
+
+	
 }

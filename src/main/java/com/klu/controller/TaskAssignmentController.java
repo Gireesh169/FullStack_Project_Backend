@@ -1,12 +1,22 @@
 package com.klu.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
-import com.klu.model.TaskAssignment;
-import com.klu.service.TaskAssignmentService;
-
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.klu.model.Complaints;
+import com.klu.model.TaskAssignment;
+import com.klu.service.ComplaintsService;
+import com.klu.service.TaskAssignmentService;
 
 @RestController
 @RequestMapping("/taskAssign")
@@ -14,6 +24,9 @@ import java.util.List;
 
 public class TaskAssignmentController {
 
+	@Autowired
+	private ComplaintsService complaintsService;
+	
 	@Autowired
     private TaskAssignmentService taskService;
     @PostMapping("/post")
@@ -29,7 +42,7 @@ public class TaskAssignmentController {
             @PathVariable Long id,
             @RequestParam String status) {
 
-        return taskService.updateTaskStatus(id, status);
+        return taskService.updateTaskStatus1(id, status);
     }
     @GetMapping("/all")
     public List<TaskAssignment> getAllAssignments() {
@@ -47,4 +60,5 @@ public class TaskAssignmentController {
         taskService.deleteAssignment(id);
         return "Task deleted successfully";
     }
+    
 }

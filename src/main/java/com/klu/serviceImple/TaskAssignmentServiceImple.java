@@ -35,18 +35,50 @@ public class TaskAssignmentServiceImple implements TaskAssignmentService {
     @Override
     public TaskAssignment assignTask(Long complaintId, int employeeId, Long adminId) {
 
-        Complaints complaint = complaintsRepo.findById(complaintId).orElse(null);
-        Employee emp = employeeRepo.findById(employeeId).orElse(null);
-        User admin = userRepo.findById(adminId).orElse(null);
+        Complaints complaint = complaintsRepo.findById(complaintId).orElseThrow();
+        Employee emp = employeeRepo.findById(employeeId).orElseThrow();
+        User admin = userRepo.findById(adminId).orElseThrow();
 
         TaskAssignment task = new TaskAssignment();
         task.setComplaint(complaint);
         task.setEmployee(emp);
         task.setAdmin(admin);
-        task.setStatus("IN_PROGRESS");
+
+        // ONLY ASSIGN → NOT RESOLVE
         complaint.setStatus("IN_PROGRESS");
 
         return taskRepo.save(task);
+    }
+    @Override
+    public TaskAssignment updateTaskStatus1(Long id, String status) {
+
+        TaskAssignment task = taskRepo.findById(id).orElseThrow();
+
+        // Only employee allowed statuses
+        if (!status.equals("IN_PROGRESS") && !status.equals("RESOLVED")) {
+            throw new RuntimeException("Invalid status");
+        }
+
+        task.setStatus(status);
+
+        // update complaint also
+        Complaints complaint = task.getComplaint();
+        complaint.setStatus(status);
+
+        return taskRepo.save(task);
+    }
+    public Complaints approveComplaint(Long complaintId) {
+
+        Complaints complaint = complaintsRepo.findById(complaintId).orElseThrow();
+
+        // Admin can only approve AFTER resolved
+        if (!complaint.getStatus().equals("RESOLVED")) {
+            throw new RuntimeException("Cannot approve before resolved");
+        }
+
+        complaint.setAdminApproved(true);
+
+        return complaintsRepo.save(complaint);
     }
 
     @Override
@@ -59,20 +91,20 @@ public class TaskAssignmentServiceImple implements TaskAssignmentService {
         return taskRepo.findByEmployeeId(employeeId);
     }
 
-    @Override
-    public TaskAssignment updateTaskStatus(Long id, String status) {
-        TaskAssignment task = taskRepo.findById(id).orElse(null);
-        if (task != null) {
-            task.setStatus(status);
-            return taskRepo.save(task);
-        }
-        return null;
-    }
+    
 
-    @Override 
-    public void deleteAssignment(Long id) {
-        taskRepo.deleteById(id);
-    }
+    
+	@Override
+	public Complaints approveComplaint() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void deleteAssignment(Long id) {
+		// TODO Auto-generated method stub
+		
+	}
 
 	
 }

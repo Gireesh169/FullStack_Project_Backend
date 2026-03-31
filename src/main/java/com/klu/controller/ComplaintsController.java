@@ -35,7 +35,6 @@ public class ComplaintsController {
             @RequestParam("image") MultipartFile file
     ) {
         try {
-            // 🔹 Save file to local folder
             String uploadDir = "uploads/";
             String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
             java.nio.file.Path filePath = java.nio.file.Paths.get(uploadDir + fileName);
@@ -43,14 +42,12 @@ public class ComplaintsController {
             java.nio.file.Files.createDirectories(filePath.getParent());
             java.nio.file.Files.write(filePath, file.getBytes());
 
-            // 🔹 Create complaint object
             Complaints c = new Complaints();
             c.setTitle(title);
             c.setDescription(description);
             c.setPlace(place);
             c.setStatus(status);
 
-            // Save file path as imageUrl
             c.setImageUrl("http://localhost:8080/uploads/" + fileName);
 
             return complaintsService.createComplaint(c);
@@ -84,5 +81,9 @@ public class ComplaintsController {
         Complaints c = complaintsService.getComplaintById(id);
         c.setStatus(status);
         return complaintsService.createComplaint(c);
+    }
+    @PutMapping("/approve/{id}")
+    public Complaints approveComplaint(@PathVariable Long id) {
+        return complaintsService.approveComplaint(id);
     }
 }

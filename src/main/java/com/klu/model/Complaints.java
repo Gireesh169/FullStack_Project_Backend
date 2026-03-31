@@ -22,4 +22,7 @@ public class Complaints {
 
     private String imageUrl;
     private String status;
+    private boolean adminApproved;
+    private double latitude;
+    private double longitude;
 }

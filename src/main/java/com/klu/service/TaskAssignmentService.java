@@ -1,5 +1,6 @@
 package com.klu.service;
 
+import com.klu.model.Complaints;
 import com.klu.model.TaskAssignment;
 import java.util.List;
 
@@ -11,7 +12,9 @@ public interface TaskAssignmentService {
 
     List<TaskAssignment> getAssignmentsByEmployee(int employeeId);
 
-    TaskAssignment updateTaskStatus(Long id, String status);
+    TaskAssignment updateTaskStatus1(Long id, String status);
 
     void deleteAssignment(Long id);
+    Complaints approveComplaint();
+
 }
