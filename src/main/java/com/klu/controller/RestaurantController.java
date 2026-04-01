@@ -20,7 +20,7 @@ import com.klu.repository.RestaurantRepo;
 
 @RestController
 @RequestMapping("/restaurants")
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = "*")
 public class RestaurantController {
 
     @Autowired

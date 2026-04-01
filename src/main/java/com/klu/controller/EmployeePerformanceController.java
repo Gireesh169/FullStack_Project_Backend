@@ -19,7 +19,7 @@ import com.klu.service.EmployeePerformanceService;
 
 @RestController
 @RequestMapping("/employeePerformance")
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = "*")
 public class EmployeePerformanceController {
 
     @Autowired

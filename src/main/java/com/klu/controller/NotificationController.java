@@ -17,7 +17,7 @@ import com.klu.repository.NotificationRepository;
 
 @RestController
 @RequestMapping("/api/notifications")
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = "*")
 public class NotificationController {
 
     @Autowired

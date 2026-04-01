@@ -16,7 +16,7 @@ import com.klu.model.CityInfo;
 import com.klu.service.CityInfoService;
 @RestController
 @RequestMapping("/citycontroller")
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = "*")
 public class CityInfoController {
 
     @Autowired

@@ -16,7 +16,7 @@ import com.klu.model.Employee;
 import com.klu.service.EmployeeService;
 @RestController
 @RequestMapping("/Employee")
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = "*")
 public class EmployeeController {
 
     @Autowired

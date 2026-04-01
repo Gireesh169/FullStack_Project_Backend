@@ -15,7 +15,7 @@ import com.klu.repository.LocationRepository;
 
 @RestController
 @RequestMapping("/api/locations")
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = "*")
 public class LocationController {
 
     @Autowired

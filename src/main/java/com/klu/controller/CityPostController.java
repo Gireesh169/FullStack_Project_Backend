@@ -19,7 +19,7 @@ import com.klu.service.CityPostService;
 
 @RestController
 @RequestMapping("/posts")
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = "*")
 public class CityPostController {
 
     @Autowired
