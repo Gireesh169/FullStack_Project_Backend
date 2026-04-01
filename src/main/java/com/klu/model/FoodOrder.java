@@ -2,7 +2,11 @@ package com.klu.model;
 
 import java.time.LocalDateTime;
 
+import com.klu.enums.OrderStatus;
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -27,12 +31,20 @@ private Restaurant restaurant;
 
 private double totalAmount;
 
-private String status; 
 
 
 @ManyToOne
 private Employee deliveryEmployee;
 
 private LocalDateTime createdAt;
+
+private Double latitude;
+private Double longitude;
+private String deliveryAddress;
+@Enumerated(EnumType.STRING)
+private OrderStatus status;
+public void setStatus(OrderStatus status) {
+    this.status = status;
+}
 
 }
