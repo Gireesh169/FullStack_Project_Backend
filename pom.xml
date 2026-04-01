@@ -91,6 +91,7 @@
     <artifactId>lombok</artifactId>
     <optional>true</optional>
 </dependency>
+<packaging>jar</packaging>
 
 
 	</dependencies>
