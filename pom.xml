@@ -6,12 +6,15 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>4.0.3</version>
+		
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.klu</groupId>
 	<artifactId>FullStackProject</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
 	<name>FullStackProject</name>
+	
 	<description>Demo project for Spring Boot</description>
 	<url/>
 	<licenses>
@@ -91,7 +94,7 @@
     <artifactId>lombok</artifactId>
     <optional>true</optional>
 </dependency>
-<packaging>jar</packaging>
+
 
 
 	</dependencies>
